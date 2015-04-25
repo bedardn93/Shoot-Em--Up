@@ -131,7 +131,7 @@ public class Enemy extends Core{
         start++;
     }
     
-    public void spawnLanedEnemeies(int update, int size){
+    public void spawnLanedEnemies(int update, int size){
         int[] lanes = generateLaneX(size);
         Random rand = new Random();
         int x = rand.nextInt(lanes.length) + 0;

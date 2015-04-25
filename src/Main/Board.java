@@ -14,6 +14,7 @@ public class Board extends JPanel implements ActionListener{
     private Background bg = new Background();
     private Save s = new Save();
     private Menu m = new Menu();
+    private Power pow = new Power();
     
     private Timer time;
     public static boolean pause = true;
@@ -42,8 +43,10 @@ public class Board extends JPanel implements ActionListener{
             c.move();
             c.characterMovement();
             bg.scroll();
-            en.spawnLanedEnemeies(50, 6);
+            en.spawnLanedEnemies(50, 6);
             en.move(2);
+            pow.spawnLanedPowerups(800, 6);
+            pow.move(1);
             repaint();
             gameOver();
         }
@@ -71,6 +74,18 @@ public class Board extends JPanel implements ActionListener{
                  c.damage(1);
                  en.removeEnemy(i);
              }
+        }
+    }
+    
+    public void checkPowerupCollision(){
+        for(int i = 0; i < pow.getList().size(); i++){
+            Rectangle powerup = pow.p.get(i).getBounds();
+            Rectangle character = c.getBounds();
+            if(powerup.intersects(character)){
+                System.out.println("Got Powerup!");
+                c.damage(-1);
+                pow.removePowerup(i);
+            }
         }
     }
     
@@ -102,6 +117,7 @@ public class Board extends JPanel implements ActionListener{
         //checkBulletMiss();
         checkEnemyCollision();
         //checkBuildingCollision();
+        checkPowerupCollision();
     }
 
     //check if bullets hit an enemy
@@ -174,6 +190,7 @@ public class Board extends JPanel implements ActionListener{
         c.drawObject(g2d, c);
         c.debugCharacter(g2d);
         bullet.drawList(g2d, bullet.getList());
+        pow.drawList(g2d, pow.getList());
         
         
         if(pause == true && gameOver == false)
