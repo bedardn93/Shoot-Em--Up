@@ -2,6 +2,10 @@ package Main;
 
 import java.util.*;
 import java.awt.*;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 /* blocks or obstacles that can be stepped on and collide with character/enemies*/
@@ -14,7 +18,11 @@ public class Building extends Core{
     public Building(int x, int y, String img){
         this.x=x;
         this.y=y;
-        still = new ImageIcon("C:\\Users\\Nick\\Pictures\\" + img).getImage();
+        try {
+	    still = ImageIO.read(ClassLoader.getSystemResource("Programming Dir/"+img));
+	} catch (IOException ex) {
+	    Logger.getLogger(Core.class.getName()).log(Level.SEVERE, null, ex);
+	}
     }
     
     public Building(int x, int y, int wid, int ht, String img){

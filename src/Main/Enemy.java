@@ -3,6 +3,10 @@ package Main;
 import javax.swing.ImageIcon;
 import java.util.*;
 import java.awt.*;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 public class Enemy extends Core{
     
@@ -18,14 +22,22 @@ public class Enemy extends Core{
     public Enemy(int x, int y){
         this.x=x;
         this.y=y;
-        still = new ImageIcon("enemy.png").getImage();
+	try {
+	    still = ImageIO.read(ClassLoader.getSystemResource("Programming Dir/"+"ghost.png"));
+	} catch (IOException ex) {
+	    Logger.getLogger(Enemy.class.getName()).log(Level.SEVERE, null, ex);
+	}
         visible = true;
     }
 
     public Enemy(int x, int y, String img){
         this.x=x;
         this.y=y;
-        still = new ImageIcon(img).getImage();
+        try {
+	    still = ImageIO.read(ClassLoader.getSystemResource("Programming Dir/"+"ghost.png"));
+	} catch (IOException ex) {
+	    Logger.getLogger(Enemy.class.getName()).log(Level.SEVERE, null, ex);
+	}
         visible = true;
     }
     

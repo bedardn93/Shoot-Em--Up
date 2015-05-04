@@ -1,8 +1,12 @@
 package Main;
 
 import java.awt.Rectangle;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 public class Power extends Core {
@@ -16,13 +20,21 @@ public class Power extends Core {
     public Power(int x, int y){
         this.x = x;
         this.y = y;
-        still = new ImageIcon("powerup.png").getImage();
+        try {
+	    still = ImageIO.read(ClassLoader.getSystemResource("Programming Dir/"+"powerup.png"));
+	} catch (IOException ex) {
+	    Logger.getLogger(Core.class.getName()).log(Level.SEVERE, null, ex);
+	}
     }
     
     public Power(int x, int y, String img){
         this.x = x;
         this.y = y;
-        still = new ImageIcon(img).getImage();
+        try {
+	    still = ImageIO.read(ClassLoader.getSystemResource("Programming Dir/"+img));
+	} catch (IOException ex) {
+	    Logger.getLogger(Core.class.getName()).log(Level.SEVERE, null, ex);
+	}
     }
     
     public ArrayList getList(){

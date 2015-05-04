@@ -2,6 +2,10 @@ package Main;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class Character extends Core{
@@ -32,7 +36,11 @@ public class Character extends Core{
         health = hlth;
         this.x = x;
         this.y=y;
-        still = new ImageIcon(img).getImage();
+        try {
+	    still = ImageIO.read(ClassLoader.getSystemResource("Programming Dir/"+img));
+	} catch (IOException ex) {
+	    Logger.getLogger(Core.class.getName()).log(Level.SEVERE, null, ex);
+	}
         visible = true;
     }
     

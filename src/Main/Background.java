@@ -1,7 +1,11 @@
 package Main;
 
+import java.io.IOException;
 import javax.swing.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 public class Background extends Core{
     
@@ -11,10 +15,14 @@ public class Background extends Core{
     
     public Background(){}
     
-    public Background(int x, int y, String img){
+    public Background(int x, int y, String img) {
         this.x =x;
         this.y=y;
-        still = new ImageIcon(img).getImage();
+	try {
+	    still = ImageIO.read(ClassLoader.getSystemResource("Programming Dir/"+img));
+	} catch (IOException ex) {
+	    Logger.getLogger(Background.class.getName()).log(Level.SEVERE, null, ex);
+	}
     }
     
     //scrolls the background
@@ -33,7 +41,7 @@ public class Background extends Core{
     }
     
     public void addBackground(int x, int y, String img){
-        b.add(new Background(x,y,img));
+	b.add(new Background(x,y,img));
     }
     
     public ArrayList getList(){

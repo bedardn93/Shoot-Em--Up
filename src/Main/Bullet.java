@@ -1,6 +1,10 @@
 package Main;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 public class Bullet extends Core{
@@ -14,7 +18,11 @@ public class Bullet extends Core{
         this.y=y;
         this.vx=vx;
         this.vy=vy;
-        still = new ImageIcon("bulletUp.png").getImage();
+        try {
+	    still = ImageIO.read(ClassLoader.getSystemResource("Programming Dir/"+"bulletUp.png"));
+	} catch (IOException ex) {
+	    Logger.getLogger(Core.class.getName()).log(Level.SEVERE, null, ex);
+	}
         visible = true;
     }
 
@@ -23,7 +31,11 @@ public class Bullet extends Core{
         this.y=y;
         this.vx=vx;
         this.vy=vy;
-        this.still = new ImageIcon(img).getImage();
+        try {
+	    this.still = ImageIO.read(ClassLoader.getSystemResource("Programming Dir/"+img));
+	} catch (IOException ex) {
+	    Logger.getLogger(Core.class.getName()).log(Level.SEVERE, null, ex);
+	}
         visible = true;
     }
     

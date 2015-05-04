@@ -8,6 +8,9 @@ import javax.sound.sampled.Clip;
 import javax.swing.*;
 //import sun.audio.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 
 //Abstract class with a compilation of methods and variables used throughout program
@@ -41,7 +44,11 @@ public abstract class Core {
         health = hlth;
         this.x = x;
         this.y=y;
-        still = new ImageIcon(img).getImage();
+	try {
+	    still = ImageIO.read(ClassLoader.getSystemResource("Programming Dir/"+img));
+	} catch (IOException ex) {
+	    Logger.getLogger(Core.class.getName()).log(Level.SEVERE, null, ex);
+	}
     }
 
     //getter methods below
@@ -146,7 +153,7 @@ public abstract class Core {
     
     public void addSound(String url){
         try{
-            sounds.add(AudioSystem.getAudioInputStream(new File(url)));
+            sounds.add(AudioSystem.getAudioInputStream(ClassLoader.getSystemResource("Programming Dir/"+url)));
         }catch(Exception e){
             System.err.print(e);
         }
@@ -170,19 +177,17 @@ public abstract class Core {
             Clip clip = AudioSystem.getClip();
             if(sounds.isEmpty())
                 addSound(url);
-            for(int i = 0; i < sounds.size(); i++){
-                if(sounds.get(i).equals
-                        (AudioSystem.getAudioInputStream(new File(url))))
-                    clip.open(sounds.get(i));
-                else{
-                    addSound(url);
-                    clip.open(AudioSystem.getAudioInputStream(new File(url)));
-                    
-                }
-                clip.start();
-                break;
-            }
-        }catch(Exception e){
+	    for (AudioInputStream sound : sounds) {
+		if (sound.equals(AudioSystem.getAudioInputStream(ClassLoader.getSystemResource("Programming Dir/"+url)))) {
+		    clip.open(sound);
+		} else {
+		    addSound(url);
+		    clip.open(AudioSystem.getAudioInputStream(ClassLoader.getSystemResource("Programming Dir/"+url)));
+		}
+		clip.start();
+		break;
+	    }
+	}catch(Exception e){
             System.err.println(e);
         }
     }
